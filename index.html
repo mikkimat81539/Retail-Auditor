@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retail Auditors | DFW Seasonal Part-Time Openings</title>
+  <style>
+    :root {
+      --navy: #0f294a;
+      --navy-dark: #091a30;
+      --teal: #0d7a8a;
+      --teal-light: #e6f4f6;
+      --amber: #e67e22;
+      --amber-hover: #cf6d17;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 12px;
+      --shadow: 0 10px 25px -5px rgba(15, 41, 74, 0.08), 0 4px 10px -2px rgba(15, 41, 74, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* Top Announcement Strip */
+    .top-banner {
+      background: var(--navy-dark);
+      color: #ffffff;
+      text-align: center;
+      padding: 0.55rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    .top-banner span {
+      color: #fbbf24;
+      font-weight: 700;
+    }
+
+    /* Header / Nav (Only HOME & JOB OPENINGS) */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      max-width: 1125px;
+      margin: 0 auto;
+      padding: 0.9rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      text-decoration: none;
+      color: var(--navy);
+      cursor: pointer;
+    }
+
+    .brand-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--navy), var(--teal));
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 1rem;
+    }
+
+    .brand-name {
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: 0.03em;
+      line-height: 1.1;
+    }
+
+    .brand-sub {
+      font-size: 0.72rem;
+      color: var(--teal);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      padding: 0.55rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      color: var(--navy);
+      background: #f1f5f9;
+    }
+
+    .nav-btn.active {
+      color: #ffffff;
+      background: var(--navy);
+    }
+
+    /* Views */
+    .view {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container {
+      max-width: 1125px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 55%, var(--teal) 100%);
+      color: #ffffff;
+      padding: 4rem 0;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 1.1rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.15;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.08rem;
+      color: #e2e8f0;
+      max-width: 580px;
+      margin-bottom: 1.75rem;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+    }
+
+    .btn-primary {
+      background: var(--amber);
+      color: #ffffff;
+      border: none;
+      padding: 0.85rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--amber-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 0.85rem 1.4rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .hero-card {
+      background: #ffffff;
+      color: var(--text);
+      border-radius: var(--radius);
+      padding: 1.6rem;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card h2 {
+      font-size: 1.1rem;
+      color: var(--navy);
+      margin-bottom: 1rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .fact-list {
+      list-style: none;
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .fact-list li {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.93rem;
+    }
+
+    .fact-label {
+      color: var(--muted);
+    }
+
+    .fact-val {
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* Sections */
+    .section {
+      padding: 3.5rem 0;
+    }
+
+    .section-header {
+      max-width: 680px;
+      margin-bottom: 2rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.8rem;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-header p {
+      color: var(--muted);
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(15, 41, 74, 0.04);
+    }
+
+    .step-num {
+      display: inline-grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--teal-light);
+      color: var(--teal);
+      font-weight: 800;
+      font-size: 0.9rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .card h3 {
+      font-size: 1.12rem;
+      color: var(--navy);
+      margin-bottom: 0.45rem;
+    }
+
+    .card p {
+      font-size: 0.94rem;
+      color: var(--muted);
+    }
+
+    /* DFW Zones Bar */
+    .zones-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .zone-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .zone-tag {
+      background: #f1f5f9;
+      color: var(--navy);
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+    }
+
+    /* Job Openings Controls */
+    .filters {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-bottom: 1.75rem;
+      align-items: center;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      min-width: 190px;
+      flex: 1;
+    }
+
+    .filter-group label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    select, input {
+      padding: 0.6rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: #ffffff;
+    }
+
+    select:focus, input:focus {
+      outline: 2px solid var(--teal);
+      border-color: var(--teal);
+    }
+
+    .jobs-list {
+      display: grid;
+      gap: 1.1rem;
+    }
+
+    .job-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.2rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .job-card:hover {
+      border-color: var(--teal);
+      box-shadow: var(--shadow);
+    }
+
+    .job-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .badge {
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 0.22rem 0.6rem;
+      border-radius: 999px;
+      background: var(--teal-light);
+      color: var(--teal);
+    }
+
+    .badge.seasonal {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    .job-title {
+      font-size: 1.2rem;
+      color: var(--navy);
+      margin-bottom: 0.35rem;
+    }
+
+    .job-desc {
+      color: var(--muted);
+      font-size: 0.93rem;
+      max-width: 660px;
+    }
+
+    .job-side {
+      text-align: right;
+      min-width: 170px;
+    }
+
+    .pay {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      display: none;
+      place-items: center;
+      padding: 1rem;
+      z-index: 250;
+    }
+
+    .modal-backdrop.open {
+      display: grid;
+    }
+
+    .modal {
+      background: #ffffff;
+      border-radius: var(--radius);
+      max-width: 480px;
+      width: 100%;
+      padding: 1.75rem;
+      box-shadow: var(--shadow);
+    }
+
+    .modal-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .modal-top h3 {
+      color: var(--navy);
+      font-size: 1.25rem;
+    }
+
+    .close-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-field label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .confirmation {
+      display: none;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 0.94rem;
+      margin-top: 0.75rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--navy-dark);
+      color: #cbd5e1;
+      padding: 1.75rem 0;
+      margin-top: 3rem;
+      font-size: 0.88rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    @media (max-width: 860px) {
+      .hero-grid, .grid-3 {
+        grid-template-columns: 1fr;
+      }
+      .job-side {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-banner">
+    <span>NOW HIRING IN DFW:</span> Seasonal Part-Time In-Store Product &amp; Shelf Auditors — Dallas, Fort Worth &amp; Surrounding Cities
+  </div>
+
+  <header>
+    <div class="nav-container">
+      <div class="brand" onclick="switchView('home')">
+        <div class="brand-badge">RA</div>
+        <div>
+          <div class="brand-name">RETAIL AUDITORS</div>
+          <div class="brand-sub">DFW Seasonal Team</div>
+        </div>
+      </div>
+
+      <nav aria-label="Primary Navigation">
+        <button id="nav-home" class="nav-btn active" onclick="switchView('home')">HOME</button>
+        <button id="nav-jobs" class="nav-btn" onclick="switchView('jobs')">JOB OPENINGS</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HOME VIEW -->
+  <main id="view-home" class="view active">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="pill">Seasonal • Part-Time • DFW Only</div>
+          <h1>Track Store Inventory Across DFW This Season</h1>
+          <p>
+            Join our seasonal part-time retail auditing team in the Dallas–Fort Worth area. Visit assigned local stores, verify product availability, check shelf displays, and submit accurate inventory counts using your smartphone.
+          </p>
+          <div class="cta-row">
+            <button class="btn-primary" onclick="switchView('jobs')">View Job Openings</button>
+            <button class="btn-secondary" onclick="openApplyModal('DFW Seasonal Part-Time Auditor')">Quick Apply</button>
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <h2>Seasonal Role Snapshot</h2>
+          <ul class="fact-list">
+            <li><span class="fact-label">Service Area</span><span class="fact-val">DFW Metroplex Only</span></li>
+            <li><span class="fact-label">Employment Type</span><span class="fact-val">Seasonal Part-Time</span></li>
+            <li><span class="fact-label">Primary Task</span><span class="fact-val">Product Inventory Tracking</span></li>
+            <li><span class="fact-label">Schedule</span><span class="fact-val">Flexible Weekly Windows</span></li>
+	    <!--<li><span class="fact-label">Equipment</span><span class="fact-val">Smartphone + Reliable Car</span></li>-->
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>How Seasonal Store Audits Work</h2>
+          <p>Straightforward, structured in-store inventory checks designed for flexible part-time schedules across DFW.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="step-num">1</div>
+            <h3>Claim DFW Store Routes</h3>
+            <p>Pick seasonal part-time store visits in areas convenient to you—such as Fort Worth, Arlington, Dallas, Irving, Plano, or Frisco.</p>
+          </div>
+          <div class="card">
+            <div class="step-num">2</div>
+            <h3>Track Target Products</h3>
+            <p>Walk designated aisles, check stock levels, verify promotional displays and pricing tags, and flag out-of-stock or misplaced items.</p>
+          </div>
+          <div class="card">
+            <div class="step-num">3</div>
+            <h3>Submit Digital Counts</h3>
+            <p>Log counts and capture clear shelf photos directly in our reporting form before wrapping up your store visit.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="zones-box">
+          <div>
+            <h3 style="color: var(--navy); margin-bottom: 0.25rem;">DFW Coverage Areas</h3>
+            <p style="color: var(--muted); font-size: 0.92rem;">All seasonal part-time assignments are strictly within the Dallas–Fort Worth metroplex.</p>
+          </div>
+          <div class="zone-tags">
+            <span class="zone-tag">Fort Worth</span>
+            <span class="zone-tag">Dallas</span>
+            <span class="zone-tag">Arlington &amp; Grand Prairie</span>
+            <span class="zone-tag">Irving &amp; Las Colinas</span>
+            <span class="zone-tag">Plano, Frisco &amp; McKinney</span>
+            <span class="zone-tag">Garland, Richardson &amp; Mesquite</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- JOB OPENINGS VIEW -->
+  <main id="view-jobs" class="view">
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>DFW Seasonal Part-Time Job Openings</h2>
+          <p>Filter current seasonal part-time openings by DFW zone or search by store focus and keyword.</p>
+        </div>
+
+        <div class="filters">
+          <div class="filter-group">
+            <label for="zoneFilter">DFW Area</label>
+            <select id="zoneFilter" onchange="renderJobs()">
+              <option value="ALL">All DFW Areas</option>
+              <option value="Fort Worth & West">Fort Worth &amp; West</option>
+              <option value="Dallas & Central">Dallas &amp; Central</option>
+              <option value="Mid-Cities (Arlington / Irving)">Mid-Cities (Arlington / Irving)</option>
+              <option value="North DFW (Plano / Frisco / McKinney)">North DFW (Plano / Frisco / McKinney)</option>
+              <option value="East DFW (Garland / Richardson / Mesquite)">East DFW (Garland / Richardson / Mesquite)</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="searchInput">Keyword Search</label>
+            <input id="searchInput" type="text" placeholder="e.g., inventory, grocery, seasonal, endcap..." oninput="renderJobs()" />
+          </div>
+        </div>
+
+        <div id="jobsContainer" class="jobs-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- QUICK APPLY MODAL -->
+  <div id="applyModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-top">
+        <h3 id="modalTitle">Apply for Seasonal Opening</h3>
+        <button class="close-btn" onclick="closeApplyModal()" aria-label="Close modal">&times;</button>
+      </div>
+
+      <form id="applyForm" onsubmit="submitApplication(event)">
+        <div class="form-field">
+          <label for="roleField">Position</label>
+          <input id="roleField" type="text" readonly />
+        </div>
+
+        <div class="form-field">
+          <label for="nameField">Full Name</label>
+          <input id="nameField" type="text" required placeholder="Jordan Taylor" />
+        </div>
+
+        <div class="form-field">
+          <label for="emailField">Email Address</label>
+          <input id="emailField" type="email" required placeholder="jordan@example.com" />
+        </div>
+
+        <div class="form-field">
+          <label for="cityField">DFW City / Zip Code</label>
+          <input id="cityField" type="text" required placeholder="e.g., Fort Worth 76102 or Plano 75023" />
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%;">Submit Seasonal Application</button>
+        <div id="confirmBox" class="confirmation"></div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container footer-inner">
+      <div><strong>RETAIL AUDITORS</strong> — Seasonal Part-Time Inventory Auditing (DFW Only)</div>
+      <div>Hiring Seasonal Part-Time Auditors Across Dallas–Fort Worth</div>
+    </div>
+  </footer>
+
+  <script>
+
+    const FORMSPREE_ENDPOINT = "https://formspree.io/f/mwlorend"
+
+    const OPENINGS = [
+      {
+        id: "DFW-SEAS-101",
+        title: "Seasonal Part-Time Retail Inventory Auditor — Fort Worth & West",
+        zone: "Fort Worth & West",
+        hours: "Part-Time • Seasonal (10–25 hrs/wk)",
+        pay: "$10 / hr",
+        description: "Visit assigned retail and grocery stores across Fort Worth, Benbrook, and Weatherford to count targeted seasonal SKUs, verify shelf tags, and report stockouts."
+      },
+      {
+        id: "DFW-SEAS-102",
+        title: "Seasonal Part-Time Product & Shelf Auditor — Dallas & Central",
+        zone: "Dallas & Central",
+        hours: "Part-Time • Seasonal (10–25 hrs/wk)",
+        pay: "$10 / hr",
+        description: "Conduct in-store inventory checks on featured holiday and everyday products across Dallas locations, tracking on-shelf availability and promotional displays."
+      },
+      {
+        id: "DFW-SEAS-103",
+        title: "Seasonal Part-Time Store Inventory Auditor — Arlington & Irving",
+        zone: "Mid-Cities (Arlington / Irving)",
+        hours: "Part-Time • Seasonal (8–18 hrs/wk)",
+        pay: "$10 / hr",
+        description: "Audit product inventory counts, endcap placement, and price accuracy at assigned retail stores in Arlington, Irving, and Grand Prairie."
+      },
+      {
+        id: "DFW-SEAS-104",
+        title: "Seasonal Part-Time Inventory Auditor — Plano, Frisco & McKinney",
+        zone: "North DFW (Plano / Frisco / McKinney)",
+        hours: "Part-Time • Seasonal (10–25 hrs/wk)",
+        pay: "$10 / hr",
+        description: "Travel between nearby North DFW stores to track inventory of priority products, document shelf gaps, and submit same-day mobile reports."
+      },
+      {
+        id: "DFW-SEAS-105",
+        title: "Seasonal Part-Time Store Auditor — Garland, Richardson & Mesquite",
+        zone: "East DFW (Garland / Richardson / Mesquite)",
+        hours: "Part-Time • Seasonal (10–25 hrs/wk)",
+        pay: "$10 / hr",
+        description: "Complete scheduled seasonal part-time inventory checks across East DFW retail aisles, verifying product counts and seasonal display compliance."
+      }
+    ];
+
+    function switchView(viewName) {
+      document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+
+      document.getElementById(`view-${viewName}`).classList.add("active");
+      document.getElementById(`nav-${viewName}`).classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderJobs() {
+      const zone = document.getElementById("zoneFilter").value;
+      const query = document.getElementById("searchInput").value.trim().toLowerCase();
+      const container = document.getElementById("jobsContainer");
+
+      const filtered = OPENINGS.filter(job => {
+        const matchesZone = zone === "ALL" || job.zone === zone;
+        const matchesQuery =
+          !query ||
+          job.title.toLowerCase().includes(query) ||
+          job.zone.toLowerCase().includes(query) ||
+          job.description.toLowerCase().includes(query);
+        return matchesZone && matchesQuery;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="card">
+            <h3>No matching DFW openings for that filter</h3>
+            <p>Try selecting "All DFW Areas" or clearing your keyword search.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered
+        .map(
+          job => `
+          <article class="job-card">
+            <div>
+              <div class="job-meta">
+                <span class="badge seasonal">Seasonal Part-Time</span>
+                <span class="badge">${job.zone}</span>
+                <span class="badge">${job.hours}</span>
+              </div>
+              <h3 class="job-title">${job.title}</h3>
+              <p class="job-desc">${job.description}</p>
+            </div>
+            <div class="job-side">
+              <div class="pay">${job.pay}</div>
+              <button class="btn-primary" onclick="openApplyModal('${job.title.replace(/'/g, "\\'")}')">Apply Now</button>
+            </div>
+          </article>
+        `
+        )
+        .join("");
+    }
+
+    function openApplyModal(roleTitle) {
+      document.getElementById("roleField").value = roleTitle;
+      document.getElementById("applyForm").reset();
+      document.getElementById("roleField").value = roleTitle;
+      document.getElementById("confirmBox").style.display = "none";
+      document.getElementById("applyModal").classList.add("open");
+    }
+
+    function closeApplyModal() {
+      document.getElementById("applyModal").classList.remove("open");
+    }
+
+    function submitApplication(event) {
+      event.preventDefault();
+      const name = document.getElementById("nameField").value.trim();
+      const role = document.getElementById("roleField").value.trim();
+      const city = document.getElementById("cityField").value.trim();
+
+      const confirmBox = document.getElementById("confirmBox");
+      confirmBox.style.display = "block";
+      confirmBox.innerHTML = `
+        <strong>Application Received!</strong> Thanks, ${name}. Your seasonal part-time interest for <em>${role}</em> (${city}) has been recorded for DFW review.
+      `;
+    }
+
+    document.getElementById("applyModal").addEventListener("click", e => {
+      if (e.target.id === "applyModal") closeApplyModal();
+    });
+
+    renderJobs();
+  </script>
+</body>
+</html>
