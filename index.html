@@ -50,7 +50,7 @@
       font-weight: 700;
     }
 
-    /* Header / Nav (Only HOME & JOB OPENINGS) */
+    /* Header / Nav */
     header {
       position: sticky;
       top: 0;
@@ -68,6 +68,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
+      flex-wrap: wrap;
     }
 
     .brand {
@@ -110,14 +111,15 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      flex-wrap: wrap;
     }
 
     .nav-btn {
       background: transparent;
       border: none;
-      padding: 0.55rem 1.1rem;
+      padding: 0.55rem 1.05rem;
       border-radius: 8px;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 600;
       color: var(--muted);
       cursor: pointer;
@@ -387,18 +389,24 @@
       letter-spacing: 0.04em;
     }
 
-    select, input {
-      padding: 0.6rem 0.75rem;
+    select, input, textarea {
+      padding: 0.65rem 0.75rem;
       border: 1px solid var(--border);
       border-radius: 8px;
       font-size: 0.95rem;
+      font-family: inherit;
       color: var(--text);
       background: #ffffff;
     }
 
-    select:focus, input:focus {
+    select:focus, input:focus, textarea:focus {
       outline: 2px solid var(--teal);
       border-color: var(--teal);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 95px;
     }
 
     .jobs-list {
@@ -469,49 +477,33 @@
       margin-bottom: 0.5rem;
     }
 
-    /* Modal */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.55);
-      display: none;
-      place-items: center;
-      padding: 1rem;
-      z-index: 250;
-    }
-
-    .modal-backdrop.open {
-      display: grid;
-    }
-
-    .modal {
-      background: #ffffff;
+    /* Resume Form Page */
+    .resume-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: var(--radius);
-      max-width: 480px;
-      width: 100%;
-      padding: 1.75rem;
+      padding: 2rem;
       box-shadow: var(--shadow);
+      max-width: 820px;
     }
 
-    .modal-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-
-    .modal-top h3 {
+    .resume-section-title {
+      font-size: 1.05rem;
+      font-weight: 700;
       color: var(--navy);
-      font-size: 1.25rem;
+      margin: 1.25rem 0 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border);
     }
 
-    .close-btn {
-      background: transparent;
-      border: none;
-      font-size: 1.5rem;
-      line-height: 1;
-      color: var(--muted);
-      cursor: pointer;
+    .resume-section-title:first-of-type {
+      margin-top: 0;
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
     }
 
     .form-field {
@@ -555,7 +547,7 @@
     }
 
     @media (max-width: 860px) {
-      .hero-grid, .grid-3 {
+      .hero-grid, .grid-3, .form-row-2 {
         grid-template-columns: 1fr;
       }
       .job-side {
@@ -583,6 +575,7 @@
       <nav aria-label="Primary Navigation">
         <button id="nav-home" class="nav-btn active" onclick="switchView('home')">HOME</button>
         <button id="nav-jobs" class="nav-btn" onclick="switchView('jobs')">JOB OPENINGS</button>
+        <button id="nav-resume" class="nav-btn" onclick="switchView('resume')">RESUME FORM</button>
       </nav>
     </div>
   </header>
@@ -609,8 +602,6 @@
             <li><span class="fact-label">Service Area</span><span class="fact-val">DFW Metroplex Only</span></li>
             <li><span class="fact-label">Employment Type</span><span class="fact-val">Seasonal Part-Time</span></li>
             <li><span class="fact-label">Primary Task</span><span class="fact-val">Product Inventory Tracking</span></li>
-            <!--<li><span class="fact-label">Schedule</span><span class="fact-val">Flexible Weekly Windows</span></li>
-	    <li><span class="fact-label">Equipment</span><span class="fact-val">Smartphone + Reliable Car</span></li>-->
           </ul>
         </aside>
       </div>
@@ -696,42 +687,101 @@
     </section>
   </main>
 
-  <!-- QUICK APPLY MODAL -->
-  <div id="applyModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal">
-      <div class="modal-top">
-        <h3 id="modalTitle">Apply for Seasonal Opening</h3>
-        <button class="close-btn" onclick="closeApplyModal()" aria-label="Close modal">&times;</button>
+  <!-- UNIFIED APPLICATION & RESUME FORM VIEW -->
+  <main id="view-resume" class="view">
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Seasonal Application &amp; Resume Form</h2>
+          <p>Complete your contact details, work experience, school/education, and availability in one form for our DFW seasonal team.</p>
+        </div>
+
+        <div class="resume-card">
+          <form id="resumeForm" onsubmit="submitResumeForm(event)">
+            <input type="hidden" name="_subject" value="New DFW Seasonal Auditor Application & Resume" />
+
+            <div class="resume-section-title">Contact &amp; Selected Role</div>
+            <div class="form-field">
+              <label for="resRoleField">Position</label>
+              <select id="resRoleField" name="position" required>
+                <option value="DFW Seasonal Part-Time Auditor">DFW Seasonal Part-Time Auditor (General)</option>
+                <option value="Seasonal Part-Time Retail Inventory Auditor — Fort Worth & West">Seasonal Part-Time Retail Inventory Auditor — Fort Worth &amp; West</option>
+                <option value="Seasonal Part-Time Product & Shelf Auditor — Dallas & Central">Seasonal Part-Time Product &amp; Shelf Auditor — Dallas &amp; Central</option>
+                <option value="Seasonal Part-Time Store Inventory Auditor — Arlington & Irving">Seasonal Part-Time Store Inventory Auditor — Arlington &amp; Irving</option>
+                <option value="Seasonal Part-Time Inventory Auditor — Plano, Frisco & McKinney">Seasonal Part-Time Inventory Auditor — Plano, Frisco &amp; McKinney</option>
+                <option value="Seasonal Part-Time Store Auditor — Garland, Richardson & Mesquite">Seasonal Part-Time Store Auditor — Garland, Richardson &amp; Mesquite</option>
+              </select>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-field">
+                <label for="resNameField">Full Name</label>
+                <input id="resNameField" name="name" type="text" required placeholder="Jordan Taylor" />
+              </div>
+              <div class="form-field">
+                <label for="resPhoneField">Phone Number</label>
+                <input id="resPhoneField" name="phone" type="tel" required placeholder="(817) 555-0194" />
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-field">
+                <label for="resEmailField">Email Address</label>
+                <input id="resEmailField" name="email" type="email" required placeholder="jordan@example.com" />
+              </div>
+              <div class="form-field">
+                <label for="resCityField">DFW City / Zip Code</label>
+                <input id="resCityField" name="dfw_location" type="text" required placeholder="e.g., Fort Worth 76102 or Plano 75023" />
+              </div>
+            </div>
+
+            <div class="resume-section-title">Work Experience</div>
+            <div class="form-row-2">
+              <div class="form-field">
+                <label for="recentEmployerField">Most Recent Employer / Company</label>
+                <input id="recentEmployerField" name="recent_employer" type="text" required placeholder="e.g., Local Grocery or Retail Store" />
+              </div>
+              <div class="form-field">
+                <label for="recentTitleField">Job Title &amp; Dates Worked</label>
+                <input id="recentTitleField" name="recent_role_dates" type="text" required placeholder="e.g., Stocker / Sales Associate (2024–2025)" />
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="workExpField">Work Experience Summary &amp; Key Duties</label>
+              <textarea id="workExpField" name="work_experience" required placeholder="List past jobs, inventory/stocking/retail experience, customer service roles, or seasonal work..."></textarea>
+            </div>
+
+            <div class="resume-section-title">Education / School</div>
+            <div class="form-row-2">
+              <div class="form-field">
+                <label for="schoolNameField">School / College / University Name</label>
+                <input id="schoolNameField" name="school_name" type="text" required placeholder="e.g., Tarrant County College or High School" />
+              </div>
+              <div class="form-field">
+                <label for="educationLevelField">Highest Education / Status</label>
+                <input id="educationLevelField" name="education_status" type="text" required placeholder="e.g., High School Diploma, Some College, Enrolled" />
+              </div>
+            </div>
+
+            <div class="resume-section-title">Skills, Availability &amp; Resume Link</div>
+            <div class="form-field">
+              <label for="skillsAvailField">Relevant Skills &amp; Weekly Availability</label>
+              <textarea id="skillsAvailField" name="skills_and_availability" required placeholder="Share attention to detail, smartphone comfort, reliable transportation notes, and days/hours you can work..."></textarea>
+            </div>
+
+            <div class="form-field">
+              <label for="resLinkField">Resume Link (Google Drive, Dropbox, or LinkedIn)</label>
+              <input id="resLinkField" name="resume_link" type="url" required placeholder="https://drive.google.com/... or https://linkedin.com/in/..." />
+            </div>
+
+            <button type="submit" class="btn-primary" style="width: 100%;">Submit Application &amp; Resume</button>
+            <div id="resumeConfirmBox" class="confirmation"></div>
+          </form>
+        </div>
       </div>
-
-
-      <form id="applyForm" onsubmit="submitApplication(event)">
-        <div class="form-field">
-          <label for="roleField">Position</label>
-          <input id="roleField" type="text" readonly />
-        </div>
-
-        <div class="form-field">
-          <label for="nameField">Full Name</label>
-          <input id="nameField" type="text" required placeholder="Jordan Taylor" />
-        </div>
-
-        <div class="form-field">
-          <label for="emailField">Email Address</label>
-          <input id="emailField" type="email" required placeholder="jordan@example.com" />
-        </div>
-
-        <div class="form-field">
-          <label for="cityField">DFW City / Zip Code</label>
-          <input id="cityField" type="text" required placeholder="e.g., Fort Worth 76102 or Plano 75023" />
-        </div>
-
-        <button type="submit" class="btn-primary" style="width: 100%;">Submit Seasonal Application</button>
-        <div id="confirmBox" class="confirmation"></div>
-      </form>
-
-    </div>
-  </div>
+    </section>
+  </main>
 
   <footer>
     <div class="container footer-inner">
@@ -786,37 +836,13 @@
       }
     ];
 
-    function ensureResumeLinkField() {
-      const form = document.getElementById("applyForm");
-      if (!form || document.getElementById("resumeLinkField")) return;
-
-      const wrapper = document.createElement("div");
-      wrapper.className = "form-field";
-
-      const label = document.createElement("label");
-      label.setAttribute("for", "resumeLinkField");
-      label.textContent = "Resume Link (Google Drive, Dropbox, or LinkedIn)";
-
-      const input = document.createElement("input");
-      input.id = "resumeLinkField";
-      input.name = "resume_link";
-      input.type = "url";
-      input.required = true;
-      input.placeholder = "https://drive.google.com/... or https://linkedin.com/in/...";
-
-      wrapper.appendChild(label);
-      wrapper.appendChild(input);
-
-      const submitBtn = form.querySelector('button[type="submit"]');
-      form.insertBefore(wrapper, submitBtn);
-    }
-
     function switchView(viewName) {
       document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
       document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
 
       document.getElementById(`view-${viewName}`).classList.add("active");
-      document.getElementById(`nav-${viewName}`).classList.add("active");
+      const navBtn = document.getElementById(`nav-${viewName}`);
+      if (navBtn) navBtn.classList.add("active");
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -869,44 +895,31 @@
     }
 
     function openApplyModal(roleTitle) {
-      ensureResumeLinkField();
-      document.getElementById("applyForm").reset();
-      document.getElementById("roleField").value = roleTitle;
-      document.getElementById("confirmBox").style.display = "none";
-      document.getElementById("applyModal").classList.add("open");
+      const roleSelect = document.getElementById("resRoleField");
+      if (roleSelect && roleTitle) {
+        const exists = Array.from(roleSelect.options).some(opt => opt.value === roleTitle);
+        if (!exists) {
+          const customOpt = document.createElement("option");
+          customOpt.value = roleTitle;
+          customOpt.textContent = roleTitle;
+          roleSelect.appendChild(customOpt);
+        }
+        roleSelect.value = roleTitle;
+      }
+
+      const confirmBox = document.getElementById("resumeConfirmBox");
+      if (confirmBox) confirmBox.style.display = "none";
+
+      switchView("resume");
+
+      const nameField = document.getElementById("resNameField");
+      if (nameField) nameField.focus();
     }
 
-    function closeApplyModal() {
-      document.getElementById("applyModal").classList.remove("open");
-    }
-
-    async function submitApplication(event) {
-      event.preventDefault();
-      ensureResumeLinkField();
-
-      const form = event.target;
-      const submitBtn = form.querySelector('button[type="submit"]');
-      const confirmBox = document.getElementById("confirmBox");
-
-      const roleField = document.getElementById("roleField");
-      const nameField = document.getElementById("nameField");
-      const emailField = document.getElementById("emailField");
-      const cityField = document.getElementById("cityField");
-      const resumeLinkField = document.getElementById("resumeLinkField");
-
-      roleField.name = "position";
-      nameField.name = "name";
-      emailField.name = "email";
-      cityField.name = "dfw_location";
-      resumeLinkField.name = "resume_link";
-
-      const name = nameField.value.trim();
-      const role = roleField.value.trim();
-      const city = cityField.value.trim();
-      const resumeLink = resumeLinkField.value.trim();
-
+    async function sendToFormspree(form, submitBtn, confirmBox, successHtml) {
       if (submitBtn) {
         submitBtn.disabled = true;
+        submitBtn.dataset.originalText = submitBtn.textContent;
         submitBtn.textContent = "Submitting...";
       }
       confirmBox.style.display = "none";
@@ -928,12 +941,8 @@
         confirmBox.style.background = "#ecfdf5";
         confirmBox.style.borderColor = "#a7f3d0";
         confirmBox.style.color = "#065f46";
-        confirmBox.innerHTML = `
-          <strong>Application Sent!</strong> Thanks, ${name}. Your application for <em>${role}</em> (${city}) with resume link <em>${resumeLink}</em> has been submitted.
-        `;
-
-        form.reset();
-        roleField.value = role;
+        confirmBox.innerHTML = successHtml;
+        return true;
       } catch (error) {
         confirmBox.style.display = "block";
         confirmBox.style.background = "#fef2f2";
@@ -942,21 +951,39 @@
         confirmBox.innerHTML = `
           <strong>Submission Failed.</strong> Check your Formspree endpoint and connection, then try again.
         `;
+        return false;
       } finally {
         if (submitBtn) {
           submitBtn.disabled = false;
-          submitBtn.textContent = "Submit Seasonal Application";
+          submitBtn.textContent = submitBtn.dataset.originalText || "Submit";
         }
       }
     }
 
-    document.getElementById("applyModal").addEventListener("click", e => {
-      if (e.target.id === "applyModal") closeApplyModal();
-    });
+    async function submitResumeForm(event) {
+      event.preventDefault();
+      const form = event.target;
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const confirmBox = document.getElementById("resumeConfirmBox");
 
-    ensureResumeLinkField();
+      const name = document.getElementById("resNameField").value.trim();
+      const phone = document.getElementById("resPhoneField").value.trim();
+      const role = document.getElementById("resRoleField").value.trim();
+
+      const ok = await sendToFormspree(
+        form,
+        submitBtn,
+        confirmBox,
+        `<strong>Application &amp; Resume Sent!</strong> Thanks, ${name} (${phone}). Your application and resume details for <em>${role}</em> have been submitted.`
+      );
+
+      if (ok) {
+        form.reset();
+        document.getElementById("resRoleField").value = role;
+      }
+    }
+
     renderJobs();
-
   </script>
 </body>
 </html>
