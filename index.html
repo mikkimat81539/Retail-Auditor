@@ -741,7 +741,6 @@
   </footer>
 
   <script>
-    <script>
     const FORMSPREE_ENDPOINT = "https://formspree.io/f/mwlorend";
 
     const OPENINGS = [
@@ -786,6 +785,31 @@
         description: "Complete scheduled seasonal part-time inventory checks across East DFW retail aisles, verifying product counts and seasonal display compliance."
       }
     ];
+
+    function ensureResumeLinkField() {
+      const form = document.getElementById("applyForm");
+      if (!form || document.getElementById("resumeLinkField")) return;
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "form-field";
+
+      const label = document.createElement("label");
+      label.setAttribute("for", "resumeLinkField");
+      label.textContent = "Resume Link (Google Drive, Dropbox, or LinkedIn)";
+
+      const input = document.createElement("input");
+      input.id = "resumeLinkField";
+      input.name = "resume_link";
+      input.type = "url";
+      input.required = true;
+      input.placeholder = "https://drive.google.com/... or https://linkedin.com/in/...";
+
+      wrapper.appendChild(label);
+      wrapper.appendChild(input);
+
+      const submitBtn = form.querySelector('button[type="submit"]');
+      form.insertBefore(wrapper, submitBtn);
+    }
 
     function switchView(viewName) {
       document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
@@ -845,7 +869,7 @@
     }
 
     function openApplyModal(roleTitle) {
-      document.getElementById("roleField").value = roleTitle;
+      ensureResumeLinkField();
       document.getElementById("applyForm").reset();
       document.getElementById("roleField").value = roleTitle;
       document.getElementById("confirmBox").style.display = "none";
@@ -858,6 +882,7 @@
 
     async function submitApplication(event) {
       event.preventDefault();
+      ensureResumeLinkField();
 
       const form = event.target;
       const submitBtn = form.querySelector('button[type="submit"]');
@@ -867,15 +892,18 @@
       const nameField = document.getElementById("nameField");
       const emailField = document.getElementById("emailField");
       const cityField = document.getElementById("cityField");
+      const resumeLinkField = document.getElementById("resumeLinkField");
 
       roleField.name = "position";
       nameField.name = "name";
       emailField.name = "email";
       cityField.name = "dfw_location";
+      resumeLinkField.name = "resume_link";
 
       const name = nameField.value.trim();
       const role = roleField.value.trim();
       const city = cityField.value.trim();
+      const resumeLink = resumeLinkField.value.trim();
 
       if (submitBtn) {
         submitBtn.disabled = true;
@@ -901,7 +929,7 @@
         confirmBox.style.borderColor = "#a7f3d0";
         confirmBox.style.color = "#065f46";
         confirmBox.innerHTML = `
-          <strong>Application Sent!</strong> Thanks, ${name}. Your seasonal part-time application for <em>${role}</em> (${city}) has been submitted.
+          <strong>Application Sent!</strong> Thanks, ${name}. Your application for <em>${role}</em> (${city}) with resume link <em>${resumeLink}</em> has been submitted.
         `;
 
         form.reset();
@@ -912,7 +940,7 @@
         confirmBox.style.borderColor = "#fecaca";
         confirmBox.style.color = "#991b1b";
         confirmBox.innerHTML = `
-          <strong>Submission Failed.</strong> Please check your connection or Formspree endpoint and try again.
+          <strong>Submission Failed.</strong> Check your Formspree endpoint and connection, then try again.
         `;
       } finally {
         if (submitBtn) {
@@ -926,9 +954,8 @@
       if (e.target.id === "applyModal") closeApplyModal();
     });
 
+    ensureResumeLinkField();
     renderJobs();
-  </script>
-
 
   </script>
 </body>
