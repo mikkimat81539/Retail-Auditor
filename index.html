@@ -704,6 +704,7 @@
         <button class="close-btn" onclick="closeApplyModal()" aria-label="Close modal">&times;</button>
       </div>
 
+
       <form id="applyForm" onsubmit="submitApplication(event)">
         <div class="form-field">
           <label for="roleField">Position</label>
@@ -728,6 +729,7 @@
         <button type="submit" class="btn-primary" style="width: 100%;">Submit Seasonal Application</button>
         <div id="confirmBox" class="confirmation"></div>
       </form>
+
     </div>
   </div>
 
@@ -739,8 +741,8 @@
   </footer>
 
   <script>
-
-    const FORMSPREE_ENDPOINT = "https://formspree.io/f/mwlorend"
+    <script>
+    const FORMSPREE_ENDPOINT = "https://formspree.io/f/mwlorend";
 
     const OPENINGS = [
       {
@@ -854,17 +856,70 @@
       document.getElementById("applyModal").classList.remove("open");
     }
 
-    function submitApplication(event) {
+    async function submitApplication(event) {
       event.preventDefault();
-      const name = document.getElementById("nameField").value.trim();
-      const role = document.getElementById("roleField").value.trim();
-      const city = document.getElementById("cityField").value.trim();
 
+      const form = event.target;
+      const submitBtn = form.querySelector('button[type="submit"]');
       const confirmBox = document.getElementById("confirmBox");
-      confirmBox.style.display = "block";
-      confirmBox.innerHTML = `
-        <strong>Application Received!</strong> Thanks, ${name}. Your seasonal part-time interest for <em>${role}</em> (${city}) has been recorded for DFW review.
-      `;
+
+      const roleField = document.getElementById("roleField");
+      const nameField = document.getElementById("nameField");
+      const emailField = document.getElementById("emailField");
+      const cityField = document.getElementById("cityField");
+
+      roleField.name = "position";
+      nameField.name = "name";
+      emailField.name = "email";
+      cityField.name = "dfw_location";
+
+      const name = nameField.value.trim();
+      const role = roleField.value.trim();
+      const city = cityField.value.trim();
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submitting...";
+      }
+      confirmBox.style.display = "none";
+
+      try {
+        const response = await fetch(FORMSPREE_ENDPOINT, {
+          method: "POST",
+          body: new FormData(form),
+          headers: {
+            "Accept": "application/json"
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error("Formspree request failed");
+        }
+
+        confirmBox.style.display = "block";
+        confirmBox.style.background = "#ecfdf5";
+        confirmBox.style.borderColor = "#a7f3d0";
+        confirmBox.style.color = "#065f46";
+        confirmBox.innerHTML = `
+          <strong>Application Sent!</strong> Thanks, ${name}. Your seasonal part-time application for <em>${role}</em> (${city}) has been submitted.
+        `;
+
+        form.reset();
+        roleField.value = role;
+      } catch (error) {
+        confirmBox.style.display = "block";
+        confirmBox.style.background = "#fef2f2";
+        confirmBox.style.borderColor = "#fecaca";
+        confirmBox.style.color = "#991b1b";
+        confirmBox.innerHTML = `
+          <strong>Submission Failed.</strong> Please check your connection or Formspree endpoint and try again.
+        `;
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Submit Seasonal Application";
+        }
+      }
     }
 
     document.getElementById("applyModal").addEventListener("click", e => {
@@ -872,6 +927,9 @@
     });
 
     renderJobs();
+  </script>
+
+
   </script>
 </body>
 </html>
